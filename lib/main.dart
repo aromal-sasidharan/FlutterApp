@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myprofile/ui-components/Drawer.dart';
+import 'package:rxdart/rxdart.dart';
+import 'domain/Domain.dart' as Domain;
 
 void main() {
   runApp(MyApp());
@@ -9,18 +11,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     Widget mainPage = MyHomePage(title: 'Flutter Demossssssss Home Page');
     ThemeData theme = ThemeData(
-      // This is the theme of your application.
-      //
-      // Try running your application with "flutter run". You'll see the
-      // application has a blue toolbar. Then, without quitting the app, try
-      // changing the primarySwatch below to Colors.green and then invoke
-      // "hot reload" (press "r" in the console where you ran "flutter run",
-      // or simply save your changes to "hot reload" in a Flutter IDE).
-      // Notice that the counter didn't reset back to zero; the application
-      // is not restarted.
       primarySwatch: Colors.red,
     );
 
@@ -52,6 +44,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  PublishSubject sideMenuTapped = PublishSubject<Domain.SideMenuVM>();
+
+  List<Domain.SideMenuVM> menus = List();
+
 
   void _incrementCounter() {
     setState(() {
@@ -64,29 +60,73 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void initState() {
+    debugPrint("void initState");
+    super.initState();
+    menus.addAll([
+      Domain.SideMenuVM(name: "Projects", type: Domain.SideMenuType.MAIN),
+      Domain.SideMenuVM(name: "Contact")
+    ]);
+    sideMenuTapped.stream.listen((event) {
+      debugPrint("Hello1");
+      _incrementCounter();
+      updateMenu();
+      // Navigator.pop(context);
+    });
+  }
+  void updateMenu() {
+    setState(() {
+      var item = Domain.SideMenuVM(name: "$_counter",
+          type: Domain.SideMenuType.MAIN);
+      menus.add(item);
+    });
+  }
+  Widget body(BuildContext context) {
+    var label1 = Text(
+      'You have pushed the buttons this many times:',
+    );
+    var labelCounter = Text(
+      '$_counter',
+      style: Theme.of(context).textTheme.headline4,
+    );
+    List<Widget> widgets = [label1, labelCounter];
+    Widget view = Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: widgets
+        )
+    );
+    return view;
+  }
+
+  SideMenuView get menu {
+    SideMenuView menuView = SideMenuView(litems: menus);
+    menuView.onTapSubject.listen((event) {
+      sideMenuTapped.add(event);
+    });
+    return menuView;
+  }
+
+  FloatingActionButton get floattingButton {
+    return FloatingActionButton(
+        tooltip: "Increment",
+        onPressed: _incrementCounter,
+        child: Icon(Icons.add));
+  }
+
+  AppBar get appBar {
+    return AppBar(title: Text(widget.title));
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
-    var label1 = Text(
-      'You have pushed the buttons this many times:',
-    );
-    var labelCounter =  Text(
-      '$_counter',
-      style: Theme.of(context).textTheme.headline4,
-    );
-    List<Widget> wigets = [label1,labelCounter];
-    SideMenu menu = SideMenu();
-    Widget view = Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
-        children: wigets));
-    AppBar appBar = AppBar(title: Text(widget.title));
-    FloatingActionButton button = FloatingActionButton(tooltip: "Increment",
-        onPressed: _incrementCounter,child: Icon(Icons.add));
+    debugPrint("Widget build");
     return Scaffold(
-      appBar: appBar,
-      drawer: menu,
-      body: view,
-      floatingActionButton: button
-    );
+        appBar: appBar,
+        drawer: menu,
+        body: body(context),
+        floatingActionButton: floattingButton);
   }
 }
