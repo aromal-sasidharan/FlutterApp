@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myprofile/ui-components/Drawer.dart';
 import 'package:rxdart/rxdart.dart';
 import 'domain/Domain.dart' as Domain;
-
+import 'package:user_profile/src/profile_page.dart';
 void main() {
   runApp(MyApp());
 }
@@ -61,42 +61,30 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void initState() {
-    debugPrint("void initState");
+    debugPrint("${this.runtimeType} initState");
     super.initState();
-    menus.addAll([
-      Domain.SideMenuVM(name: "Projects", type: Domain.SideMenuType.MAIN),
-      Domain.SideMenuVM(name: "Contact")
-    ]);
-    sideMenuTapped.stream.listen((event) {
-      debugPrint("Hello1");
-      _incrementCounter();
-      updateMenu();
-      // Navigator.pop(context);
-    });
+    setupMenus();
   }
-  void updateMenu() {
-    setState(() {
-      var item = Domain.SideMenuVM(name: "$_counter",
-          type: Domain.SideMenuType.MAIN);
-      menus.add(item);
-    });
-  }
+
+
   Widget body(BuildContext context) {
-    var label1 = Text(
-      'You have pushed the buttons this many times:',
-    );
-    var labelCounter = Text(
-      '$_counter',
-      style: Theme.of(context).textTheme.headline4,
-    );
-    List<Widget> widgets = [label1, labelCounter];
-    Widget view = Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: widgets
-        )
-    );
-    return view;
+    ProfilePage page = ProfilePage();
+    // var label1 = Text(
+    //   'You have pushed the buttons this many times:',
+    // );
+    // var labelCounter = Text(
+    //   '$_counter',
+    //   style: Theme.of(context).textTheme.headline4,
+    // );
+
+    // List<Widget> widgets = [page];
+    // Widget view = Center(
+    //     child: Column(
+    //         mainAxisAlignment: MainAxisAlignment.center,
+    //         children: widgets
+    //     )
+    // );
+    return page;
   }
 
   SideMenuView get menu {
@@ -115,18 +103,77 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   AppBar get appBar {
-    return AppBar(title: Text(widget.title));
+    return  AppBar(
+      // title: new Text(
+      //   widget.title,
+      //   style: TextStyle(color: Colors.amber),
+      // ),
+      backgroundColor: Colors.transparent,
+      elevation: 0.0,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
-    debugPrint("Widget build");
-    return Scaffold(
-        appBar: appBar,
-        drawer: menu,
-        body: body(context),
-        floatingActionButton: floattingButton);
+    debugPrint("${this.runtimeType} Widget build");
+    final scaffold = 
+          Scaffold(
+            extendBodyBehindAppBar: true,
+            drawer: menu,
+            backgroundColor: Colors.transparent,
+            appBar:appBar,
+            body: body(context),
+          );
+
+    // return Scaffold(
+    //     appBar: appBar,
+    //     drawer: menu,
+    //     body: body(context),
+    //     floatingActionButton: floattingButton);
+    return  scaffold;
+  }
+}
+
+
+extension HomePageSetup on _MyHomePageState {
+  void setupMenus() {
+    List<Domain.SideMenuVM> menuItems = Domain.Scene.values.map((Domain.Scene e)  {
+
+      return Domain.SideMenuVM(name: "${e.value}", type: Domain.SideMenuType.LIST,scene:e);
+    }).toList();
+    menus.addAll(
+        menuItems
+    );
+    sideMenuTapped.stream.listen((event) {
+      debugPrint("Hello1 $event");
+      Navigator.pop(context);
+      if (event is Domain.SideMenuVM) {
+        navigate(event);
+      }
+
+    });
+  }
+}
+
+
+extension MyNavigator on _MyHomePageState {
+
+  void navigate(Domain.SideMenuVM vm) {
+    debugPrint("Hello2 $vm");
+    switch (vm.scene) {
+
+      case Domain.Scene.Profile:
+      // TODO: Handle this case.
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+        break;
+      case Domain.Scene.Contact:
+      // TODO: Handle this case.
+        break;
+      case Domain.Scene.Projects:
+      // TODO: Handle this case.
+        break;
+    }
   }
 }

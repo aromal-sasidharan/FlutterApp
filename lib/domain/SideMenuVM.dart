@@ -10,5 +10,7 @@ enum SideMenuType {
 class SideMenuVM {
   final String name;
   final SideMenuType type;
-  SideMenuVM({this.name,this.type = SideMenuType.LIST});
+  final Scene scene;
+  SideMenuVM({this.name,this.type = SideMenuType.LIST, this.scene});
+
 }

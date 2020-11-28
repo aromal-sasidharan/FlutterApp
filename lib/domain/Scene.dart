@@ -3,6 +3,13 @@ part of 'Domain.dart';
 
 
 enum Scene {
-  profile,
-  contact
+  Profile,
+  Contact,
+  Projects
+}
+
+extension SceneExtension on Scene {
+  String get value {
+    return this.toString().split('.').last;
+  }
 }
