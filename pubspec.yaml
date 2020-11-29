@@ -23,16 +23,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  user_profile:
-    path: "modules/user_profile"
+  libaries:
+      path: "modules/libaries"
+  domain:
+      path: "modules/domain"
+  ui_kit:
+    path: "modules/ui_kit"
   asset_kit:
     path: "modules/asset_kit"
+  user_profile:
+    path: "modules/user_profile"
 
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.1
-  rxdart: ^0.24.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

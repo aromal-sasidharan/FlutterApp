@@ -23,6 +23,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  asset_kit:
+    path: "../asset_kit"
+  ui_kit:
+    path: "../ui_kit"
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -32,8 +37,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  asset_kit:
-    path: "../asset_kit"
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -49,6 +53,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - packages/asset_kit/images/user.png
+    - packages/asset_kit/data/profile.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
