@@ -3,7 +3,7 @@ import 'package:ui_kit/components/Drawer.dart';
 import 'package:ui_kit/components/Scaffold.dart' as Scaffold;
 import 'package:rxdart/rxdart.dart';
 import 'package:domain/domain.dart' as Domain;
-import 'package:user_profile/src/profile_page.dart';
+import 'package:profile_header/profile_page.dart';
 import 'package:ui_kit/theme/Theme.dart' as AppTheme;
 
 void main() {

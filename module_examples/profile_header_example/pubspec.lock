@@ -4,7 +4,7 @@ packages:
   asset_kit:
     dependency: "direct main"
     description:
-      path: "modules/asset_kit"
+      path: "../../modules/asset_kit"
       relative: true
     source: path
     version: "0.0.1"
@@ -56,14 +56,7 @@ packages:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
-  domain:
-    dependency: "direct main"
-    description:
-      path: "modules/domain"
-      relative: true
-    source: path
-    version: "0.0.1"
+    version: "1.0.2"
   fake_async:
     dependency: transitive
     description:
@@ -81,13 +74,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  libaries:
-    dependency: "direct main"
-    description:
-      path: "modules/libaries"
-      relative: true
-    source: path
-    version: "0.0.1"
   matcher:
     dependency: transitive
     description:
@@ -112,17 +98,10 @@ packages:
   profile_header:
     dependency: "direct main"
     description:
-      path: "modules/profile_header"
+      path: "../../modules/profile_header"
       relative: true
     source: path
     version: "0.0.1"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.24.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -180,10 +159,10 @@ packages:
   ui_kit:
     dependency: "direct main"
     description:
-      path: "modules/ui_kit"
+      path: "../../modules/ui_kit"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "1.0.0+1"
   vector_math:
     dependency: transitive
     description:
